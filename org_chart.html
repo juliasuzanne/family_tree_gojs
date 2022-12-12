@@ -56,7 +56,7 @@ function init() {
         validCycle: go.Diagram.CycleDestinationTree, // make sure users can only create trees
         "clickCreatingTool.archetypeNodeData": { // allow double-click in background to create a new node
           name: "(new person)",
-          title: "",
+          birthday: "",
           comments: ""
         },
         "clickCreatingTool.insertPart": function(loc) {  // override to scroll to the new node
@@ -131,8 +131,8 @@ function init() {
 
   // This converter is used by the Picture.
   function findHeadShot(pic) {
-    if (!pic) return "images/HSnopic.png"; // There are only 16 images on the server
-    return "images/HS" + pic;
+    if (!pic) return "./images/Ann.png"; // There are only 16 images on the server
+    return "./images/" + pic;
   }
 
   // define the Node template
@@ -188,7 +188,7 @@ function init() {
               name: "Picture",
               desiredSize: new go.Size(70, 70),
               margin: 1.5,
-              source: "images/HSnopic.png"  // the default image
+              source: "./images/Sara.png"  // the default image
             },
             new go.Binding("source", "pic", findHeadShot)),
           // define the panel where the text will appear
@@ -209,7 +209,7 @@ function init() {
                 minSize: new go.Size(50, 16)
               },
               new go.Binding("text", "name").makeTwoWay()),
-            $(go.TextBlock, "Title: ", textStyle(),
+            $(go.TextBlock, "Birthday: ", textStyle(),
               { row: 1, column: 0 }),
             $(go.TextBlock, textStyle(),
               {
@@ -392,22 +392,20 @@ window.addEventListener('DOMContentLoaded', init);
     <textarea id="mySavedModel" style="width:100%; height:270px;">
 { "class": "go.TreeModel",
   "nodeDataArray": [
-{"key":1, "name":"Stella Payne Diaz", "title":"CEO", "pic":"1.jpg"},
-{"key":2, "name":"Luke Warm", "title":"VP Marketing/Sales", "pic":"2.jpg", "parent":1},
-{"key":3, "name":"Meg Meehan Hoffa", "title":"Sales", "pic":"3.jpg", "parent":2},
-{"key":4, "name":"Peggy Flaming", "title":"VP Engineering", "pic":"4.jpg", "parent":1},
-{"key":5, "name":"Saul Wellingood", "title":"Manufacturing", "pic":"5.jpg", "parent":4},
-{"key":6, "name":"Al Ligori", "title":"Marketing", "pic":"6.jpg", "parent":2},
-{"key":7, "name":"Dot Stubadd", "title":"Sales Rep", "pic":"7.jpg", "parent":3},
-{"key":8, "name":"Les Ismore", "title":"Project Mgr", "pic":"8.jpg", "parent":5},
-{"key":9, "name":"April Lynn Parris", "title":"Events Mgr", "pic":"9.jpg", "parent":6},
-{"key":10, "name":"Xavier Breath", "title":"Engineering", "pic":"10.jpg", "parent":4},
-{"key":11, "name":"Anita Hammer", "title":"Process", "pic":"11.jpg", "parent":5},
-{"key":12, "name":"Billy Aiken", "title":"Software", "pic":"12.jpg", "parent":10},
-{"key":13, "name":"Stan Wellback", "title":"Testing", "pic":"13.jpg", "parent":10},
-{"key":14, "name":"Marge Innovera", "title":"Hardware", "pic":"14.jpg", "parent":10},
-{"key":15, "name":"Evan Elpus", "title":"Quality", "pic":"15.jpg", "parent":5},
-{"key":16, "name":"Lotta B. Essen", "title":"Sales Rep", "pic":"16.jpg", "parent":3}
+{"key":1, "name":"GeeShee Yee", "title":"CEO", "pic": "Sara.png"},
+{"key":2, "name":"Rose Wong", "title":"VP Marketing/Sales", "pic":"Rose.png", "parent":1},
+{"key":3, "name":"Carolyn Grimes", "title":"October 5th, 1963", "pic":"Carolyn.png", "parent":17},
+{"key":4, "name":"Lil Yee", "title":"VP Engineering", "pic":"4.jpg", "parent":1},
+{"key":5, "name":"Wendy Keefe", "title":"Manufacturing", "pic":"5.jpg", "parent":2},
+{"key":6, "name":"Cliff Wong", "title":"birthday", "pic":"Cliff.png", "parent":2},
+{"key":7, "name":"Julia Grimes", "title":"July 5th, 1995", "pic":"Julia.png", "parent":3},
+{"key":8, "name":"Ann Yee", "title":"birthday", "pic":"Ann.png", "parent":1},
+{"key":9, "name":"Sara Cullen", "title":"birthday", "pic":"Sara.png", "parent":8},
+{"key":9, "name":"Michael Cullen", "title":"birthday", "pic":"Michael.png", "parent":9},
+{"key":10, "name":"Owen Cullen", "title":"birthday", "pic":"Owen.png", "parent":9},
+{"key":11, "name":"Sean Cullen", "title":"birthday", "pic":"Sean.png", "parent":9},
+{"key":17, "name":"William Yee", "title":"June 12th, 1930", "pic":"William.png", "parent":1},
+{"key":16, "name":"Lauren Grimes", "title":"May 4th, 1992", "pic":"Lauren.png", "parent":3}
  ]
 }
     </textarea>
