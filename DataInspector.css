@@ -20,7 +20,7 @@ see also: DataInspector.js, DataInspector.html
 .inspector {
   display: inline-block;
   font: bold 14px helvetica, sans-serif;
-  background-color: #212121; /* Grey 900 */
+  background-color: #F5F5F5; /* Grey 900 */
   color: #F5F5F5; /* Grey 100 */
   cursor: default;
 }
@@ -35,7 +35,7 @@ see also: DataInspector.js, DataInspector.html
 }
 
 .inspector input {
-  background-color: #424242; /* Grey 800 */
+  background-color: #ffff; /* Grey 800 */
   color: #F5F5F5; /* Grey 100 */
   font: bold 12px helvetica, sans-serif;
   border: 0px;
@@ -44,10 +44,10 @@ see also: DataInspector.js, DataInspector.html
 
 .inspector input:disabled {
   background-color: #BDBDBD; /* Grey 400 */
-  color: #616161; /* Grey 700 */
+  color: #BDBDBD; /* Grey 700 */
 }
 
 .inspector select {
-  background-color: #424242;
+  background-color: "white";
 }
 

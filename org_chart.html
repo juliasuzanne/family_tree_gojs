@@ -16,7 +16,7 @@
       <div class="md:pl-4">
         <a class="text-white hover:text-white no-underline hover:no-underline
         font-bold text-2xl lg:text-4xl rounded-lg hover:bg-nwoods-secondary " href="../">
-          <h1 class="mb-0 p-1 ">GoJS</h1>
+          <h1 class="mb-0 p-1 ">Yee Family</h1>
         </a>
       </div>
       <button id="topnavButton" class="rounded-lg sm:hidden focus:outline-none focus:ring" aria-label="Navigation">
@@ -29,7 +29,7 @@
     <hr class="border-b border-gray-600 opacity-50 my-0 py-0" />
   </nav>
   <div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
-    <div id="navSide" class="flex flex-col w-full md:w-48 text-gray-700 bg-white flex-shrink-0"></div>
+    <!-- <div id="navSide" class="flex flex-col w-full md:w-48 text-gray-700 bg-white flex-shrink-0"></div> -->
     <!-- * * * * * * * * * * * * * -->
     <!-- Start of GoJS sample code -->
     
@@ -97,8 +97,7 @@ function init() {
     }
   });
 
-  const levelColors = ["#AC193D", "#2672EC", "#8C0095", "#5133AB",
-    "#008299", "#D24726", "#008A00", "#094AB2"];
+  const levelColors = ["black"];
 
   // override TreeLayout.commitNodes to also modify the background brush based on the tree depth level
   myDiagram.layout.commitNodes = function() {
@@ -126,7 +125,7 @@ function init() {
   // This function provides a common style for most of the TextBlocks.
   // Some of these values may be overridden in a particular TextBlock.
   function textStyle() {
-    return { font: "9pt  Segoe UI,sans-serif", stroke: "white" };
+    return { font: "9pt  Segoe UI,sans-serif", stroke: "black" }; //sets person text color
   }
 
   // This converter is used by the Picture.
@@ -181,7 +180,7 @@ function init() {
         { name: "BODY" },
         // define the node's outer shape
         $(go.Shape, "Rectangle",
-          { name: "SHAPE", fill: "#333333", stroke: 'white', strokeWidth: 3.5, portId: "" }),
+          { name: "SHAPE", fill: "white", stroke: 'black', strokeWidth: 3.5, portId: "" }),
         $(go.Panel, "Horizontal",
           $(go.Picture,
             {
@@ -342,13 +341,13 @@ function init() {
 
 
   // support editing the properties of the selected person in HTML
-  if (window.Inspector) myInspector = new Inspector("myInspector", myDiagram,
-    {
-      properties: {
-        "key": { readOnly: true },
-        "comments": {}
-      }
-    });
+  // if (window.Inspector) myInspector = new Inspector("myInspector", myDiagram,
+  //   {
+  //     properties: {
+  //       "key": { readOnly: true },
+  //       "comments": {}
+  //     }
+  //   });
 
   // Setup zoom to fit button
   document.getElementById('zoomToFit').addEventListener('click', () => myDiagram.commandHandler.zoomToFit());
@@ -381,18 +380,18 @@ window.addEventListener('DOMContentLoaded', init);
   </script>
 
 <div id="sample">
-  <div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 570px;"></div>
-  <div>
-    Edit details:<br>
+    <div>
     <div id="myInspector"></div>
   </div>
   <p><button id="zoomToFit">Zoom to Fit</button> <button id="centerRoot">Center on root</button></p>
+  <div id="myDiagramDiv" style="background-color: rgb(150, 150, 150); height: 570px; color: black"></div>
+
   
-  <div>
+  <div hidden = true>
     <textarea id="mySavedModel" style="width:100%; height:270px;">
 { "class": "go.TreeModel",
   "nodeDataArray": [
-{"key":1, "name":"GeeShee Yee", "title":"CEO", "pic": "Sara.png"},
+{"key":1, "name":"GeeShee Yee", "title":"CEO", "pic": ""},
 {"key":2, "name":"Rose Wong", "title":"VP Marketing/Sales", "pic":"Rose.png", "parent":1},
 {"key":3, "name":"Carolyn Grimes", "title":"October 5th, 1963", "pic":"Carolyn.png", "parent":17},
 {"key":4, "name":"Lil Yee", "title":"VP Engineering", "pic":"4.jpg", "parent":1},
