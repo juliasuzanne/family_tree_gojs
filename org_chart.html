@@ -54,11 +54,11 @@ function init() {
         //initialAutoScale: go.Diagram.Uniform,
         maxSelectionCount: 1, // users can select only one part at a time
         validCycle: go.Diagram.CycleDestinationTree, // make sure users can only create trees
-        "clickCreatingTool.archetypeNodeData": { // allow double-click in background to create a new node
-          name: "(new person)",
-          birthday: "",
-          comments: ""
-        },
+        // "clickCreatingTool.archetypeNodeData": { // allow double-click in background to create a new node
+        //   name: "(new person)",
+        //   birthday: "",
+        //   comments: ""
+        // },
         "clickCreatingTool.insertPart": function(loc) {  // override to scroll to the new node
           const node = go.ClickCreatingTool.prototype.insertPart.call(this, loc);
           if (node !== null) {
@@ -130,7 +130,7 @@ function init() {
 
   // This converter is used by the Picture.
   function findHeadShot(pic) {
-    if (!pic) return "./images/Ann.png"; // There are only 16 images on the server
+    if (!pic) return "./images/NoPic.png"; // There are only 16 images on the server
     return "./images/" + pic;
   }
 
@@ -181,7 +181,7 @@ function init() {
         // define the node's outer shape
         $(go.Shape, "Rectangle",
           { name: "SHAPE", fill: "white", stroke: 'black', strokeWidth: 3.5, portId: "" }),
-        $(go.Panel, "Horizontal",
+        $(go.Panel, "Vertical",
           $(go.Picture,
             {
               name: "Picture",
@@ -193,8 +193,8 @@ function init() {
           // define the panel where the text will appear
           $(go.Panel, "Table",
             {
-              minSize: new go.Size(130, NaN),
-              maxSize: new go.Size(150, NaN),
+              minSize: new go.Size(90, NaN),
+              maxSize: new go.Size(120, NaN),
               margin: new go.Margin(6, 10, 0, 6),
               defaultAlignment: go.Spot.Left
             },
@@ -218,9 +218,9 @@ function init() {
                 margin: new go.Margin(0, 0, 0, 3)
               },
               new go.Binding("text", "title").makeTwoWay()),
-            $(go.TextBlock, textStyle(),
-              { row: 2, column: 0 },
-              new go.Binding("text", "key", v => "ID: " + v)),
+            // $(go.TextBlock, textStyle(),
+            //   { row: 2, column: 0 },
+            //   new go.Binding("text", "key", v => "ID: " + v)),
             $(go.TextBlock, textStyle(),  // the comments
               {
                 row: 3, column: 0, columnSpan: 5,
@@ -268,67 +268,67 @@ function init() {
 
   // the context menu allows users to make a position vacant,
   // remove a role and reassign the subtree, or remove a department
-  myDiagram.nodeTemplate.contextMenu =
-    $("ContextMenu",
-      $("ContextMenuButton",
-        $(go.TextBlock, "Add Employee"),
-        {
-          click: (e, button) => addEmployee(button.part.adornedPart)
-        }
-      ),
-      $("ContextMenuButton",
-        $(go.TextBlock, "Vacate Position"),
-        {
-          click: (e, button) => {
-            const node = button.part.adornedPart;
-            if (node !== null) {
-              const thisemp = node.data;
-              myDiagram.startTransaction("vacate");
-              // update the key, name, picture, and comments, but leave the title
-              myDiagram.model.setDataProperty(thisemp, "name", "(Vacant)");
-              myDiagram.model.setDataProperty(thisemp, "pic", "");
-              myDiagram.model.setDataProperty(thisemp, "comments", "");
-              myDiagram.commitTransaction("vacate");
-            }
-          }
-        }
-      ),
-      $("ContextMenuButton",
-        $(go.TextBlock, "Remove Role"),
-        {
-          click: (e, button) => {
-            // reparent the subtree to this node's boss, then remove the node
-            const node = button.part.adornedPart;
-            if (node !== null) {
-              myDiagram.startTransaction("reparent remove");
-              const chl = node.findTreeChildrenNodes();
-              // iterate through the children and set their parent key to our selected node's parent key
-              while (chl.next()) {
-                const emp = chl.value;
-                myDiagram.model.setParentKeyForNodeData(emp.data, node.findTreeParentNode().data.key);
-              }
-              // and now remove the selected node itself
-              myDiagram.model.removeNodeData(node.data);
-              myDiagram.commitTransaction("reparent remove");
-            }
-          }
-        }
-      ),
-      $("ContextMenuButton",
-        $(go.TextBlock, "Remove Department"),
-        {
-          click: (e, button) => {
-            // remove the whole subtree, including the node itself
-            const node = button.part.adornedPart;
-            if (node !== null) {
-              myDiagram.startTransaction("remove dept");
-              myDiagram.removeParts(node.findTreeParts());
-              myDiagram.commitTransaction("remove dept");
-            }
-          }
-        }
-      )
-    );
+  // myDiagram.nodeTemplate.contextMenu =
+  //   $("ContextMenu",
+  //     $("ContextMenuButton",
+  //       $(go.TextBlock, "Add Employee"),
+  //       {
+  //         click: (e, button) => addEmployee(button.part.adornedPart)
+  //       }
+  //     ),
+      // $("ContextMenuButton",
+      //   $(go.TextBlock, "Vacate Position"),
+      //   {
+      //     click: (e, button) => {
+      //       const node = button.part.adornedPart;
+      //       if (node !== null) {
+      //         const thisemp = node.data;
+      //         myDiagram.startTransaction("vacate");
+      //         // update the key, name, picture, and comments, but leave the title
+      //         myDiagram.model.setDataProperty(thisemp, "name", "(Vacant)");
+      //         myDiagram.model.setDataProperty(thisemp, "pic", "");
+      //         myDiagram.model.setDataProperty(thisemp, "comments", "");
+      //         myDiagram.commitTransaction("vacate");
+      //       }
+      //     }
+      //   }
+      // ),
+      // $("ContextMenuButton",
+      //   $(go.TextBlock, "Remove Role"),
+      //   {
+      //     click: (e, button) => {
+      //       // reparent the subtree to this node's boss, then remove the node
+      //       const node = button.part.adornedPart;
+      //       if (node !== null) {
+      //         myDiagram.startTransaction("reparent remove");
+      //         const chl = node.findTreeChildrenNodes();
+      //         // iterate through the children and set their parent key to our selected node's parent key
+      //         while (chl.next()) {
+      //           const emp = chl.value;
+      //           myDiagram.model.setParentKeyForNodeData(emp.data, node.findTreeParentNode().data.key);
+      //         }
+      //         // and now remove the selected node itself
+      //         myDiagram.model.removeNodeData(node.data);
+      //         myDiagram.commitTransaction("reparent remove");
+      //       }
+      //     }
+      //   }
+      // ),
+      // $("ContextMenuButton",
+      //   $(go.TextBlock, "Remove Department"),
+      //   {
+      //     click: (e, button) => {
+      //       // remove the whole subtree, including the node itself
+      //       const node = button.part.adornedPart;
+      //       if (node !== null) {
+      //         myDiagram.startTransaction("remove dept");
+      //         myDiagram.removeParts(node.findTreeParts());
+      //         myDiagram.commitTransaction("remove dept");
+      //       }
+      //     }
+      //   }
+      // )
+    // );
 
   // define the Link template
   myDiagram.linkTemplate =
@@ -388,23 +388,60 @@ window.addEventListener('DOMContentLoaded', init);
 
   
   <div hidden = true>
-    <textarea id="mySavedModel" style="width:100%; height:270px;">
+    <textarea id="mySavedModel" style="width:50%; height:270px;">
 { "class": "go.TreeModel",
   "nodeDataArray": [
-{"key":1, "name":"GeeShee Yee", "title":"CEO", "pic": ""},
-{"key":2, "name":"Rose Wong", "title":"VP Marketing/Sales", "pic":"Rose.png", "parent":1},
-{"key":3, "name":"Carolyn Grimes", "title":"October 5th, 1963", "pic":"Carolyn.png", "parent":17},
-{"key":4, "name":"Lil Yee", "title":"VP Engineering", "pic":"4.jpg", "parent":1},
-{"key":5, "name":"Wendy Keefe", "title":"Manufacturing", "pic":"5.jpg", "parent":2},
-{"key":6, "name":"Cliff Wong", "title":"birthday", "pic":"Cliff.png", "parent":2},
-{"key":7, "name":"Julia Grimes", "title":"July 5th, 1995", "pic":"Julia.png", "parent":3},
-{"key":8, "name":"Ann Yee", "title":"birthday", "pic":"Ann.png", "parent":1},
-{"key":9, "name":"Sara Cullen", "title":"birthday", "pic":"Sara.png", "parent":8},
-{"key":9, "name":"Michael Cullen", "title":"birthday", "pic":"Michael.png", "parent":9},
-{"key":10, "name":"Owen Cullen", "title":"birthday", "pic":"Owen.png", "parent":9},
-{"key":11, "name":"Sean Cullen", "title":"birthday", "pic":"Sean.png", "parent":9},
-{"key":17, "name":"William Yee", "title":"June 12th, 1930", "pic":"William.png", "parent":1},
-{"key":16, "name":"Lauren Grimes", "title":"May 4th, 1992", "pic":"Lauren.png", "parent":3}
+  {"key":1, "name":"GeeShee Yee and Thomas Yee", "title":"12/25/1896", "pic": "GeeSheeThom.png"},
+  {"key":2, "name":"Rose Wong", "title":"01/01/2020", "pic":"Rose.png", "parent":1},
+  {"key":3, "name":"Thomas Gen Pong Yee", "title":"7/28/1924", "pic":"Thomas.png", "parent":1},
+  {"key":4, "name":"May (Lil) Yee", "title":"6/18/1927", "pic":"Lil.png", "parent":1},
+  {"key":5, "name":"Roy Yee", "title":"3/16/1929", "pic":"Roy.png", "parent":1},
+  {"key":6, "name":"William Yee", "title":"6/12/1930", "pic":"William.png", "parent":1},
+  {"key":7, "name":"Ann Grace Yee", "title":"1/13/1935", "pic":"Ann.png", "parent":1},
+  {"key":8, "name":"David Yee", "title":"11/21/1938", "pic":"David.png", "parent":1},
+  {"key":9, "name":"Jessie Toong", "title":"9/13/1917", "pic":"Jessie.png", "parent":1},
+  {"key":10, "name":"Lee-min Toong", "title":"1/5/1944", "pic": "LeeMin.png", "parent":9},
+  {"key":11, "name":"Hoo-min Toong", "title":"1/19/1946", "pic": "HooMin.png", "parent":9},
+  {"key":12, "name":"Thomas TL Yee", "title":"12/3/1959", "pic": "Thomas2.png", "parent":3},
+  {"key":13, "name":"Kenneth Yee", "title":"3/30/1963", "pic": "Ken.png", "parent":3},
+  {"key":14, "name":"Clifton Wong", "title":"10/16/1952", "pic": "Cliff.png", "parent":2},
+  {"key":15, "name":"Eric A. Wong", "title":"11/9/1954", "pic": "Eric.png", "parent":2},
+  {"key":16, "name":"Wendy Jean Wong", "title":"6/5/1958", "pic": "Wendy.png", "parent":2},
+  {"key":17, "name":"Vivien Lee", "title":"12/7/1952", "pic": "Vivien.png", "parent":4},
+  {"key":18, "name":"Steven Lee", "title":"2/28/1960", "pic": "Steven.png", "parent":4},
+  {"key":19, "name":"Anthony (Ken) Lee", "title":"?", "pic": "Kenneth.png", "parent":4},
+  {"key":20, "name":"Carolyn Grimes", "title":"10/5/1964", "pic": "Carolyn.png", "parent":6},
+  {"key":21, "name":"Sara E. Wiesel", "title":"2/10/1975", "pic": "Sara.png", "parent":7},
+  {"key":22, "name":"David Yee Jr.", "title":"11/21/1938", "pic": "David2.png", "parent":8},
+  {"key":23, "name":"Rosa Toong", "title":"11/8/1970", "pic": "", "parent":10},
+  {"key":24, "name":"Nicole E. Wong", "title":"3/18/1969", "pic": "Nicole.png", "parent":14},
+  {"key":25, "name":"Jeffrey Wong", "title":"10/25/1988", "pic": "", "parent":14},
+  {"key":26, "name":"Stephanie Wong", "title":"4/28/1989", "pic": "", "parent":15},
+  {"key":27, "name":"Alex Wong", "title":"10/27/1993", "pic": "Alex.png", "parent":15},
+  {"key":28, "name":"Jennifer A. Keefe", "title":"7/12/1989", "pic": "Jen.png", "parent":16},
+  {"key":29, "name":"Melissa Keefe", "title":"5/4/1993", "pic": "Melissa.png", "parent":16},
+  {"key":30, "name":"Frederick (Bink) Reppun", "title":"12/18/1984", "pic": "Bink.png", "parent":17},
+  {"key":31, "name":"Nicholas (Wog) Reppun", "title":"7/31/1987", "pic": "Wog.png", "parent":17},
+  {"key":32, "name":"Marea Lee", "title":"2/21/2002", "pic": "Marea.png", "parent":18},
+  {"key":33, "name":"Gage Akira Takitani Lee", "title":"6/3/2004", "pic": "Gage.png", "parent":18},
+  {"key":34, "name":"Toby May Tsuneko Lee", "title":"7/12/2008", "pic": "Toby.png", "parent":19},
+  {"key":35, "name":"Tracy Lisa Yasuko Lee", "title":"9/2/2015", "pic": "Tracy.png", "parent":19},
+  {"key":36, "name":"Julia Grimes", "title":"7/5/1995", "pic": "Julia.png", "parent":20},
+  {"key":37, "name":"Lauren Grimes", "title":"5/4/1992", "pic": "Lauren.png", "parent":20},
+  {"key":38, "name":"Owen T. Cullen", "title":"7/14/2007", "pic": "Owen.png", "parent":21},
+  {"key":39, "name":"Sean K. Cullen", "title":"9/4/2009", "pic": "Sean.png", "parent":21},
+  {"key":40, "name":"Michael Cullen", "title":"8/12/2014", "pic": "Michael.png", "parent":21},
+  {"key":41, "name":"Kaitlyn Yee", "title":"10/4/1996", "pic": "Kaitlyn.png", "parent":22},
+  {"key":42, "name":"Carrie", "title":"3/?/2002", "pic": "", "parent":22},
+  {"key":43, "name":"Landon Yee", "title":"?", "pic": "Landon.png", "parent":22},
+  {"key":44, "name":"Amanda Yee", "title":"2/3/1979", "pic": "", "parent":8},
+  {"key":45, "name":"Ava Sandberg", "title":"?", "pic": "", "parent":44},
+  {"key":46, "name":"Juliet Noonan", "title":"4/20/2019", "pic": "Juliet.png", "parent":26},
+  {"key":47, "name":"Samuel Noonan", "title":"9/15/2021", "pic": "samuel.png", "parent":26},
+  {"key":48, "name":"Judi Toong", "title":"3/18/1969", "pic": "", "parent":10},
+  {"key":49, "name":"Noelle Toong", "title":"12/19/1996", "pic": "Noelle.png", "parent":11}
+
+
  ]
 }
     </textarea>
